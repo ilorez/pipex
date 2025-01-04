@@ -7,4 +7,4 @@ malloc, free, perror,
 strerror, access, dup, dup2,
 execve, exit, fork, pipe,
 unlink, wait, waitpid
-- and 
+- and by understand this point i put the first feet in this project, leaning the concept of each function of those help me to understand what should do and how i can solve this problem 
