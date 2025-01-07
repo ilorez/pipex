@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 12:32:17 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/07 18:50:03 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/07 20:27:58 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char *ft_get_right_path(char *cmd, char **paths)
   while (*paths)
   {
     path = ft_strjoin(ft_strjoin(paths[0], "/"), cmd);
-    if (access(path, X_OK) == 0)
+    if (access(path, F_OK | X_OK) == 0)
       return path;
     free(path);
     paths++;
@@ -105,7 +105,6 @@ int main(int argc, char *argv[], char *envp[])
     ft_change_fd(fd[1], STDOUT_FILENO);
     cmds = ft_split(argv[2], ' ');
     path = ft_get_right_path(cmds[0], paths);
-    ft_printf("path: %s\n", path);
     if(execve(path, cmds, envp) == -1)
     {
       perror("execve cmd1");
@@ -114,29 +113,28 @@ int main(int argc, char *argv[], char *envp[])
       exit(1);
     }
   }
-  else {
-    if (fork() == 0)
+  if (fork() == 0)
+  {
+    close(fd[1]);
+    outfile = open(argv[4], O_WRONLY | O_CREAT, 0777);
+    if (outfile == -1)
     {
-      close(fd[1]);
-      outfile = open(argv[4], O_WRONLY | O_CREAT, 0777);
-      if (outfile == -1)
-      {
-          perror("open outfile");
-          exit(1);
-      }
-      ft_change_fd(fd[0], STDIN_FILENO);
-      ft_change_fd(outfile, STDOUT_FILENO);
-      cmds = ft_split(argv[3], ' ');
-      path = ft_get_right_path(cmds[0], paths);
-      if(execve(path, cmds, envp) == -1)
-      {
-        perror("execve cmd2");
-        ft_free_str_lst(cmds);
+        perror("open outfile");
         exit(1);
-      }
     }
-    wait(NULL);
+    ft_change_fd(fd[0], STDIN_FILENO);
+    ft_change_fd(outfile, STDOUT_FILENO);
+    cmds = ft_split(argv[3], ' ');
+    path = ft_get_right_path(cmds[0], paths);
+    if(execve(path, cmds, envp) == -1)
+    {
+      perror("execve cmd2");
+      ft_free_str_lst(cmds);
+      exit(1);
+    }
   }
+  wait(NULL);
+  wait(NULL);
   return EXIT_SUCCESS;
 }
 
