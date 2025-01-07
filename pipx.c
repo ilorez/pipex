@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 12:32:17 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/06 14:29:39 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/07 08:14:45 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,12 @@ int int main(int argc, char *argv[], char *envp[])
   }
   if (pid == 0)
   {
+    close(fd[0]);
+    char **cmd_args = ft_split(argv[2], ' ');
+    execve(cmd_args[0], cmd_args, envp);
     fd1 = open(argv[1], O_RONLY);
-    line = get_next_line(fd1);
-    while(line)
-    {
-      ft_strjoin(f_v, line);
-
-      free(line);
-      line = get_next_line(fd1);
-    }
-    free(line;)
-
-
-    
-
-
+    free(line);
   }
-
   return EXIT_SUCCESS;
 }
 
