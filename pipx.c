@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 12:32:17 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/07 20:27:58 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/08 18:39:06 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "pipx.h"
 #include "libft.h"
 
+// dup a FD and close it
 t_bool  ft_change_fd(int fd, int to)
 {
   if (dup2(fd, to) == -1)
@@ -27,6 +28,8 @@ t_bool  ft_change_fd(int fd, int to)
   close(fd);
   return true;
 }
+
+// get paths & split it from envp
 char **ft_get_paths(char *envp[])
 {
   char **paths;
@@ -54,6 +57,7 @@ char **ft_get_paths(char *envp[])
   return paths;
 }
 
+// get path can be founded
 char *ft_get_right_path(char *cmd, char **paths)
 {
   char *path;
@@ -70,6 +74,7 @@ char *ft_get_right_path(char *cmd, char **paths)
   return (ft_strdup(cmd));
 }
 
+// main functions
 int main(int argc, char *argv[], char *envp[]) 
 {
   int pid;
@@ -137,5 +142,4 @@ int main(int argc, char *argv[], char *envp[])
   wait(NULL);
   return EXIT_SUCCESS;
 }
-
 
