@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 12:32:17 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/09 09:59:31 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/09 10:30:51 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,12 @@ int main(int argc, char *argv[], char *envp[])
   char **paths;
   char *path;
 
+  if (argc != 5)
+  {
+    ft_printf("Usage: %s infile cmd1 cmd2 outfile\n", argv[0]);
+    return EXIT_FAILURE;
+  }
+   
   paths = ft_get_paths(envp);
   if (pipe(fd) == -1)
   {
@@ -138,7 +144,6 @@ int main(int argc, char *argv[], char *envp[])
       exit(1);
     }
   }
-  wait(NULL);
   wait(NULL);
   return EXIT_SUCCESS;
 }
