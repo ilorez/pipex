@@ -1,0 +1,4 @@
+build
+*.o
+pipx
+libft.a
