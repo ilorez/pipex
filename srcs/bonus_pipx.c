@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 15:53:31 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/11 16:00:00 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/11 16:19:15 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@
 t_bool  ft_change_fd(int fd, int to)
 {
   if (dup2(fd, to) == -1)
-  {
-    perror("dup2");
-    exit(1);
-  }
+    return false;
   close(fd);
   return true;
 }
@@ -46,8 +43,7 @@ char **ft_get_paths(char *envp[])
   }
   if (!paths)
   {
-    // set errno
-    ft_printf("error not fonded");
+    write(2, "Error: could not found paths\n", 29);
     exit(1);
   }
   return paths;
@@ -80,6 +76,7 @@ t_bool ft_on_error(char **cmds, char *path, char *err_msg)
       perror(err_msg);
       return (false);
 }
+
 
 t_bool ft_run_commands(int argc, char *argv[], char *envp[], char *paths[])
 {
@@ -136,7 +133,7 @@ int main(int argc, char *argv[], char *envp[])
 
   if (argc < 5)
   {
-    ft_printf("Usage: %s infile cmd1 cmd2 outfile\n", argv[0]);
+    ft_printf("Usage: \n\t%s infile cmd1 cmd2 ... cmdn outfile\n", argv[0]);
     return EXIT_FAILURE;
   }
   paths = ft_get_paths(envp);
