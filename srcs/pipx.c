@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 12:32:17 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/09 10:30:51 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/09 12:04:59 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char **ft_get_paths(char *envp[])
   {
     if (ft_strncmp(*envp, "PATH=", 5) == 0)
     {
-      paths = ft_split(*envp, ':');
+      paths = ft_split(((*envp)+5), ':');
       break;
     }
     envp++;
@@ -51,9 +51,6 @@ char **ft_get_paths(char *envp[])
     ft_printf("error not fonded");
     exit(1);
   }
-  tmp = paths[0];
-  paths[0] = ft_strdup(tmp+5);
-  free(tmp);
   return paths;
 }
 
@@ -84,6 +81,7 @@ int main(int argc, char *argv[], char *envp[])
   int outfile;
   char **paths;
   char *path;
+  t_list *bl_lst;
 
   if (argc != 5)
   {
@@ -91,7 +89,7 @@ int main(int argc, char *argv[], char *envp[])
     return EXIT_FAILURE;
   }
    
-  paths = ft_get_paths(envp);
+  paths = ft_ad(ft_get_paths(envp), &bl_lst, 1, ft_free_str_lst);
   if (pipe(fd) == -1)
   {
     perror("pipe");
@@ -124,9 +122,10 @@ int main(int argc, char *argv[], char *envp[])
       exit(1);
     }
   }
+  close(fd[1]);
+  wait(NULL);
   if (fork() == 0)
   {
-    close(fd[1]);
     outfile = open(argv[4], O_WRONLY | O_CREAT, 0777);
     if (outfile == -1)
     {
