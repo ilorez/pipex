@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 15:53:31 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/10 16:15:57 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/11 15:27:12 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,27 +73,67 @@ char *ft_get_right_path(char *cmd, char **paths)
   }
   return (ft_strdup(cmd));
 }
+void ft_close(int fd)
+{
+
+
+}
 
 // main functions
 int main(int argc, char *argv[], char *envp[]) 
 {
-  int fd1[2]
-  int fd2[2]
+  int fd1[2];
   int infile;
   int outfile;
+  char **paths;
+  char *path;
+  char **cmds;
   int read;
+  int pid;
 
+  if (argc <= 5)
+  {
+    ft_printf("Usage: %s infile cmd1 cmd2 outfile\n", argv[0]);
+    return EXIT_FAILURE;
+  }
+  paths = ft_get_paths(envp);
 
-  read = infile;
+  read = open(argv[1], O_RDONLY);
+  if (read == -1)
+  {
+          perror("open infile");
+          exit(1);
+  }
+  outfile = open(argv[argc-1], O_WRONLY | O_CREAT, 0777);
+  if (outfile == -1)
+  {
+      perror("open outfile");
+      exit(1);
+  }
   while(i=2, i < argc-1, i++)
   {
     cmds = split(argv[i]);
     path = get_right_path(paths);
-    pipe(fd1);
-    id = fork();
-    if (id==0)
+    if (pipe(fd1) == -1)
     {
-        dup2(fd1[1], 1);
+      perror("pipe");
+      return EXIT_FAILURE;
+    }
+    pid = fork();
+    if (pid == -1)
+    {
+      perror("fork");
+      return EXIT_FAILURE;
+    }
+    if (pid==0)
+    {
+        if (i < argc - 2)
+          dup2(fd1[1], 1);
+        else
+        {
+          dup2(outfile, 1);
+          close(outfile);
+        }
         dup2(read, 0);
         close(read);
         close(fd[1]);
@@ -106,5 +146,6 @@ int main(int argc, char *argv[], char *envp[])
     free(cmds);
     free(path);
   }
+  
 }
 
