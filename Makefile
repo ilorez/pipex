@@ -6,7 +6,7 @@
 #    By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/25 16:09:52 by znajdaou          #+#    #+#              #
-#    Updated: 2025/01/09 10:27:18 by znajdaou         ###   ########.fr        #
+#    Updated: 2025/01/11 15:39:45 by znajdaou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,13 +17,13 @@ NAME = pipx
 
 LIBFT_DR = ./libft
 
-FLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -g3
 INCLUDES_DRS = -I./includes -I./libft/includes
 CC = cc
 AR = ar rc
 RM = rm -f
 
-SRCS= pipx.c 
+SRCS= bonus_pipx.c 
 			
 OBJS = $(addprefix $(BUILD_DR),$(SRCS:%.c=%.o))
 
