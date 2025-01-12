@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:33:26 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/12 13:39:41 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/12 13:43:37 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 // include
 # include "libft.h"
-# include "pipx.h"
+# include <errno.h>
+# include <stdio.h>
 # include <sys/wait.h>
 
 // pipx data structure
