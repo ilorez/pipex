@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 15:53:31 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/12 10:55:44 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/12 12:11:49 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,16 @@
 #include <sys/wait.h>
 #include "pipx.h"
 #include "libft.h"
+
+
+typedef struct s_pipx {
+  int fd[2];
+  int outfile;
+  int read;
+  char *path;
+  char **cmds;
+} t_pipx;
+
 
 // dup a FD and close it
 t_bool  ft_change_fd(int fd, int to)
@@ -67,7 +77,7 @@ char *ft_get_right_path(char *cmd, char **paths)
 }
 
 
-t_bool ft_on_error(char **cmds, char *path, char *err_msg)
+t_bool ft_on_error(t_pipx data, char **cmds, char *path, char *err_msg)
 {
       if (cmds)
         ft_free_str_lst(cmds);
@@ -75,64 +85,59 @@ t_bool ft_on_error(char **cmds, char *path, char *err_msg)
         free(path);
       if (err_msg)
       {
+        free(data);
         perror(err_msg);
         return (false);
       }
       return (true);
 }
 
-typedef struct s_pipx {
-  int fd[2];
-  int outfile;
-  int read;
-  char *path;
-  char **cmds;
-} t_pipx;
+void ft_child(t_pipx data, int i, int argc, char *envp[])
+{
+  if (i < argc - 2)
+    ft_change_fd(data->fd[1], 1);
+  else
+    ft_change_fd(data->outfile, 1);
+  ft_change_fd(data->read, 0);
+  close(data->fd[0]);
+  if (execve(data->path, data->cmds, envp) == -1)
+  {
+      perror(err_msg);
+      exit(1);
+  }
+}
 
 t_bool ft_run_commands(int argc, char *argv[], char *envp[], char *paths[])
 {
-  t_pipx 
-  int fd[2];
-  int outfile;
-  char *path;
-  char **cmds;
-  int read;
-  int pid;
+  t_pipx *data;
   int i;
 
-  read = open(argv[1], O_RDONLY);
-  if (read == -1)
-      return (ft_on_error(NULL, NULL, "open infile"));
-  outfile = open(argv[argc-1], O_WRONLY | O_CREAT, 0777);
+  data = ft_calloc(sizeof(t_pipx), 1);
+  data->read = open(argv[1], O_RDONLY);
+  if (data->read == -1)
+      return (ft_on_error(data, NULL, NULL, "open infile"));
+  data->outfile = open(argv[argc-1], O_WRONLY | O_CREAT, 0777);
   if (outfile == -1)
-      return (ft_on_error(NULL, NULL, "open outfile"));
+      return (ft_on_error(data, NULL, NULL, "open outfile"));
   i = 1;
   while(++i < argc-1)
   {
-    cmds = ft_split(argv[i], ' ');
-    path = ft_get_right_path(cmds[0], paths);
+    data->cmds = ft_split(argv[i], ' ');
+    data->path = ft_get_right_path(data->cmds[0], paths);
     if (pipe(fd) == -1)
-      return (ft_on_error(cmds, path, "pipe"));
-    pid = fork();
-    if (pid == -1)
-      return (ft_on_error(cmds, path, "fork"));
-    if (pid==0)
-    {
-        if (i < argc - 2)
-          ft_change_fd(fd[1], 1);
-        else
-          ft_change_fd(outfile, 1);
-        ft_change_fd(read, 0);
-        close(fd[0]);
-        execve(path, cmds, envp);
-    }
-    close(fd[1]);
+      return (ft_on_error(data, data->cmds, data->path, "pipe"));
+    data->pid = fork();
+    if (data->pid == -1)
+      return (ft_on_error(data, data->cmds, data->path, "fork"));
+    else if (data->pid==0)
+      ft_child(data, i, argc, envp);
+    close(data->fd[1]);
     wait(NULL);
     if (i < argc - 2)
-      read = fd[0];
+      data->read = data->fd[0];
     else 
-      close(fd[0]);
-    ft_on_error(cmds, path, NULL);
+      close(data->fd[0]);
+    ft_on_error(data, data->cmds, data->path, NULL);
   }
   return (true);
 }
