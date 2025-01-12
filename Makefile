@@ -6,7 +6,7 @@
 #    By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/25 16:09:52 by znajdaou          #+#    #+#              #
-#    Updated: 2025/01/11 15:39:45 by znajdaou         ###   ########.fr        #
+#    Updated: 2025/01/12 13:39:23 by znajdaou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ CC = cc
 AR = ar rc
 RM = rm -f
 
-SRCS= bonus_pipx.c 
+SRCS= pipx.c run_commands.c utils.c
 			
 OBJS = $(addprefix $(BUILD_DR),$(SRCS:%.c=%.o))
 
