@@ -29,7 +29,7 @@ t_bool		ft_free_tag(t_list **lst, int tag);
 // Free All Tags
 t_bool		ft_free_all_tags(t_list **lst);
 
-void	*ft_nad(void *ptr, t_list **list);
-void	*ft_ad(void *ptr, t_list **list, int tag, void (*del)(void *));
+void		*ft_nad(void *ptr, t_list **list);
+void		*ft_ad(void *ptr, t_list **list, int tag, void (*del)(void *));
 
 #endif

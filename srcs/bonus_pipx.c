@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 15:53:31 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/11 16:19:15 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/12 10:55:44 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char *ft_get_right_path(char *cmd, char **paths)
   path = NULL;
   while (*paths)
   {
-    path = ft_strjoin(ft_strjoin(paths[0], "/"), cmd);
+    path = ft_strjoin(paths[0], cmd, "/");
     if (access(path, F_OK | X_OK) == 0)
       return path;
     free(path);
@@ -73,13 +73,25 @@ t_bool ft_on_error(char **cmds, char *path, char *err_msg)
         ft_free_str_lst(cmds);
       if (path)
         free(path);
-      perror(err_msg);
-      return (false);
+      if (err_msg)
+      {
+        perror(err_msg);
+        return (false);
+      }
+      return (true);
 }
 
+typedef struct s_pipx {
+  int fd[2];
+  int outfile;
+  int read;
+  char *path;
+  char **cmds;
+} t_pipx;
 
 t_bool ft_run_commands(int argc, char *argv[], char *envp[], char *paths[])
 {
+  t_pipx 
   int fd[2];
   int outfile;
   char *path;
@@ -120,8 +132,7 @@ t_bool ft_run_commands(int argc, char *argv[], char *envp[], char *paths[])
       read = fd[0];
     else 
       close(fd[0]);
-    ft_free_str_lst(cmds);
-    free(path);
+    ft_on_error(cmds, path, NULL);
   }
   return (true);
 }

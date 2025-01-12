@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 12:51:59 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/01 15:11:33 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/09 12:14:53 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -86,19 +86,3 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	return (_get_splited(s, c, strings));
 }
-
-/*int	main(int argc, char **argv)
-{
-	char	**strs;
-	int		i;
-
-	strs = ft_split(argv[1], argv[2][0]);
-	i = 0;
-	while (strs[i])
-	{
-		printf("string %d: [%s]\n", i, strs[i]);
-		i++;
-	}
-	return (argc);
-}
-*/

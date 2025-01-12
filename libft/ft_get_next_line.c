@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:00:19 by znajdaou          #+#    #+#             */
-/*   Updated: 2024/12/31 12:05:18 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/11 17:40:34 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static char	*_search_for_line(int fd, char *c_point, char *buffer)
 		buffer[readed] = '\0';
 		found_line = ft_strchr(buffer, '\n');
 		tmp = c_point;
-		c_point = ft_strjoin(c_point, buffer);
+		c_point = ft_strjoin(c_point, buffer, "");
 		free(tmp);
 	}
 	return (c_point);

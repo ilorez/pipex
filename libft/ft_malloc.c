@@ -34,7 +34,6 @@ void	*ft_malloc(size_t size, t_list **list, int tag, void (*del)(void *))
 	return (ptr);
 }
 
-
 void	*ft_ad(void *ptr, t_list **list, int tag, void (*del)(void *))
 {
 	t_list		*newnode;
