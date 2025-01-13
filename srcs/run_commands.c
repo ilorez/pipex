@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:33:00 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/12 13:37:22 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/13 14:47:14 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ void	ft_child(t_pipx *data, int i, int argc, char *envp[])
 	if (i < argc - 2)
 		ft_change_fd((data->fd)[1], 1);
 	else
+  {
 		ft_change_fd(data->outfile, 1);
+	  close((data->fd)[1]);
+  }
 	ft_change_fd(data->infile, 0);
 	close((data->fd)[0]);
 	if (execve(data->path, data->cmds, envp) == -1)
@@ -58,12 +61,10 @@ t_bool	ft_run_commands(int argc, char *argv[], char *envp[], char *paths[])
 		else if (data->pid == 0)
 			ft_child(data, data->i, argc, envp);
 		close((data->fd)[1]);
-		wait(NULL);
-		if (data->i < argc - 2)
-			data->infile = (data->fd)[0];
-		else
-			close((data->fd)[0]);
+		data->infile = (data->fd)[0];
 		ft_on_error(data, data->cmds, data->path, NULL);
 	}
+	close(data->infile);
+	wait(NULL);
 	return (true);
 }
