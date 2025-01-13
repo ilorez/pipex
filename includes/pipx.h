@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:33:26 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/12 13:43:37 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/13 18:11:34 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_pipx
 	int		pid;
 	int		outfile;
 	int		infile;
+  int argc;
 	int		i;
 	char	*path;
 	char	**cmds;
