@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:33:26 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/14 16:05:15 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/14 16:39:49 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct s_pipx
 void		ft_child(t_pipx *data, char *envp[], char *argv[], char *paths[]);
 int		ft_run_commands(t_pipx *data, char *argv[], char *envp[],
 				char *paths[]);
-int		ft_open_rw_files(t_pipx **data, char *argv[]);
+int		ft_open_rw_files(t_pipx **data, char *argv[], char **paths);
 void		ft_read_from_input(t_pipx *data, char *av[]);
 t_bool		ft_change_fd(int fd, int to);
 char		**ft_get_paths(char *envp[]);

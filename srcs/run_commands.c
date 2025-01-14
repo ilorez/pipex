@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:33:00 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/14 16:07:53 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/14 16:41:53 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_run_commands(t_pipx *data, char *argv[], char *envp[], char *paths[])
 {
-	if (ft_open_rw_files(&data, argv))
+	if (ft_open_rw_files(&data, argv, paths))
 		return (errno);
 	while (++(data->i) < data->argc - 1)
 	{
@@ -36,7 +36,6 @@ int	ft_run_commands(t_pipx *data, char *argv[], char *envp[], char *paths[])
 
 void	ft_child(t_pipx *data, char *envp[], char **argv, char **paths)
 {
-  
 	data->cmds = ft_split(argv[data->i], ' ');
 	data->path = ft_get_right_path(data->cmds[0], paths);
 	if (data->i < data->argc - 2)
@@ -80,7 +79,7 @@ void	ft_read_from_input(t_pipx *data, char *av[])
 	exit(0);
 }
 
-int	ft_open_rw_files(t_pipx **data, char *argv[])
+int	ft_open_rw_files(t_pipx **data, char *argv[],char  **paths)
 {
 	if ((*data)->i == 2)
 	{
@@ -92,7 +91,10 @@ int	ft_open_rw_files(t_pipx **data, char *argv[])
 		if ((*data)->pid == -1)
 			return (ft_on_error(NULL, NULL, "fork"));
 		else if ((*data)->pid == 0)
+    {
+      ft_free_str_lst(paths);
 			ft_read_from_input(*data, argv);
+  }
 		close(((*data)->fd)[1]);
 		(*data)->infile = ((*data)->fd)[0];
 	}

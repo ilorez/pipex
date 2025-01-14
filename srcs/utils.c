@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:32:50 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/14 16:03:16 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/14 16:38:34 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	**ft_get_paths(char *envp[])
 	if (!paths)
 	{
 		ft_putstr_fd("Error: could not found paths\n", STDERR_FILENO);
-		exit(1);
+    exit(1);
 	}
 	return (paths);
 }
