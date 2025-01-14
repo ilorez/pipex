@@ -6,15 +6,15 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:33:00 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/14 16:41:53 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/14 17:49:12 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	ft_run_commands(t_pipx *data, char *argv[], char *envp[], char *paths[])
+int	ft_run_commands(t_pipx *data, char *argv[], char *envp[])
 {
-	if (ft_open_rw_files(&data, argv, paths))
+	if (ft_open_rw_files(&data, argv))
 		return (errno);
 	while (++(data->i) < data->argc - 1)
 	{
@@ -24,20 +24,19 @@ int	ft_run_commands(t_pipx *data, char *argv[], char *envp[], char *paths[])
 		if (data->pid == -1)
 			return (ft_on_error(NULL, NULL, "fork"));
 		else if (data->pid == 0)
-			ft_child(data, envp, argv, paths);
+			ft_child(data, envp, argv);
 		close((data->fd)[1]);
 		data->infile = (data->fd)[0];
-		//ft_on_error(data->cmds, data->path, NULL);
 	}
 	close(data->infile);
 	wait(NULL);
 	return (true);
 }
 
-void	ft_child(t_pipx *data, char *envp[], char **argv, char **paths)
+void	ft_child(t_pipx *data, char *envp[], char **argv)
 {
 	data->cmds = ft_split(argv[data->i], ' ');
-	data->path = ft_get_right_path(data->cmds[0], paths);
+	data->path = ft_get_right_path(data->cmds[0], data->paths);
 	if (data->i < data->argc - 2)
 		ft_change_fd((data->fd)[1], STDOUT_FILENO);
 	else
@@ -48,11 +47,11 @@ void	ft_child(t_pipx *data, char *envp[], char **argv, char **paths)
 	ft_change_fd(data->infile, STDIN_FILENO);
 	close((data->fd)[0]);
 	if (execve(data->path, data->cmds, envp) == -1)
-  {
+	{
 		ft_on_error(data->cmds, data->path, "execve");
-    ft_free_str_lst(paths);
-    exit(errno);
-  }
+		ft_free_data(data);
+		exit(errno);
+	}
 }
 
 void	ft_read_from_input(t_pipx *data, char *av[])
@@ -76,10 +75,11 @@ void	ft_read_from_input(t_pipx *data, char *av[])
 	}
 	free(line);
 	close((data->fd)[1]);
+	ft_free_data(data);
 	exit(0);
 }
 
-int	ft_open_rw_files(t_pipx **data, char *argv[],char  **paths)
+int	ft_open_rw_files(t_pipx **data, char *argv[])
 {
 	if ((*data)->i == 2)
 	{
@@ -91,10 +91,7 @@ int	ft_open_rw_files(t_pipx **data, char *argv[],char  **paths)
 		if ((*data)->pid == -1)
 			return (ft_on_error(NULL, NULL, "fork"));
 		else if ((*data)->pid == 0)
-    {
-      ft_free_str_lst(paths);
 			ft_read_from_input(*data, argv);
-  }
 		close(((*data)->fd)[1]);
 		(*data)->infile = ((*data)->fd)[0];
 	}
@@ -103,8 +100,8 @@ int	ft_open_rw_files(t_pipx **data, char *argv[],char  **paths)
 		(*data)->infile = open(argv[1], O_RDONLY);
 		if ((*data)->infile == -1)
 			return (ft_on_error(NULL, NULL, "open infile"));
-		(*data)->outfile = open(argv[(*data)->argc - 1], O_WRONLY | O_CREAT | O_TRUNC,
-				0777);
+		(*data)->outfile = open(argv[(*data)->argc - 1],
+				O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	}
 	if ((*data)->outfile == -1)
 		return (ft_on_error(NULL, NULL, "open outfile"));

@@ -6,7 +6,7 @@
 #    By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/25 16:09:52 by znajdaou          #+#    #+#              #
-#    Updated: 2025/01/14 15:56:56 by znajdaou         ###   ########.fr        #
+#    Updated: 2025/01/14 17:31:41 by znajdaou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,5 +62,10 @@ run:
 
 run_h: 
 	valgrind $(VALFLAGS) ./pipex here_doc EOF "grep salam" "grep salam1" "grep salam12" "grep salam123" /dev/stdout
+
+run_h2: 
+	valgrind $(VALFLAGS) ./pipex here_doc EOF "grep salam" "grep salam1" "grep salam12" "grep salam123" /dev/stdout
+
+
 
 .PHONY: all clean fclean re bonus
