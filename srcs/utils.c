@@ -6,13 +6,13 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:32:50 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/14 13:32:25 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/14 16:03:16 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-t_bool	ft_on_error(t_pipx *data, char **cmds, char *path, char *err_msg)
+int	ft_on_error(char **cmds, char *path, char *err_msg)
 {
 	if (cmds)
 		ft_free_str_lst(cmds);
@@ -20,12 +20,10 @@ t_bool	ft_on_error(t_pipx *data, char **cmds, char *path, char *err_msg)
 		free(path);
 	if (err_msg)
 	{
-		if (data)
-			free(data);
 		perror(err_msg);
-		return (false);
+		return (errno);
 	}
-	return (true);
+	return (0);
 }
 
 // dup a FD and close it

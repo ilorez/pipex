@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 15:53:31 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/14 13:51:24 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/14 15:37:53 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, char *argv[], char *envp[])
 	}
 	paths = ft_get_paths(envp);
 	data = ft_calloc(sizeof(t_pipx), 1);
-	if (ft_strncmp(argv[1], "heredoc", ft_strlen(argv[1]) + 1) == 0)
+	if (ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1]) + 1) == 0)
 		data->i = 2;
 	else
 		data->i = 1;
@@ -32,7 +32,7 @@ int	main(int argc, char *argv[], char *envp[])
 	if (!ft_run_commands(data, argv, envp, paths))
   {
     free(data);
-    free(paths);
+	  ft_free_str_lst(paths);
 		return (EXIT_FAILURE);
   }
   free(data);

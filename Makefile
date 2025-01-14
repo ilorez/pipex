@@ -6,7 +6,7 @@
 #    By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/25 16:09:52 by znajdaou          #+#    #+#              #
-#    Updated: 2025/01/14 13:52:30 by znajdaou         ###   ########.fr        #
+#    Updated: 2025/01/14 15:56:56 by znajdaou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ NAME = pipex
 
 LIBFT_DR = ./libft
 
-FLAGS = -Wall -Wextra -Werror -g3 # -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -ggdb # -fsanitize=address
 INCLUDES_DRS = -I./includes -I./libft/includes
 CC = cc
 AR = ar rc
@@ -51,13 +51,16 @@ fclean: clean
 
 re: fclean all
 
+VALFLAGS= --leak-check=full \
+					--show-leak-kinds=all \
+					--track-origins=yes \
+					--trace-children=yes \
+					--trace-children-skip='*/bin/*,*/sbin/*' 
 
 run: 
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --trace-children=yes --trace-children-skip='*/bin/*,*/sbin/*' ./pipex /dev/stdin "grep salam" "grep salam1" "grep salam12" "grep salam123" /dev/stdout
+	valgrind $(VALFLAGS) ./pipex /dev/stdin "grep salam" "grep salam1" "grep salam12" "grep salam123" /dev/stdout
 
 run_h: 
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --trace-children=yes --trace-children-skip='*/bin/*,*/sbin/*' ./pipex heredoc EOF "grep salam" "grep salam1" "grep salam12" "grep salam123" /dev/stdout
-
-
+	valgrind $(VALFLAGS) ./pipex here_doc EOF "grep salam" "grep salam1" "grep salam12" "grep salam123" /dev/stdout
 
 .PHONY: all clean fclean re bonus
