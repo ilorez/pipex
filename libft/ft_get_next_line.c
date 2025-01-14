@@ -6,11 +6,23 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:00:19 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/11 17:40:34 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/14 13:48:42 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+/* check_null_terminate
+ * work just if *c_point is not null
+ * */
+static void	_check_null_terminate(char **c_point)
+{
+	if (!**c_point)
+	{
+		free(*c_point);
+		*c_point = NULL;
+	}
+}
 
 /* _cut_line
  * this function is used to extract the line from the readed value
@@ -27,8 +39,7 @@ static void	_cut_line(char **c_point, char **line)
 
 	if (!**c_point)
 	{
-		free(*c_point);
-		*c_point = NULL;
+		_check_null_terminate(c_point);
 		*line = NULL;
 		return ;
 	}
@@ -46,6 +57,8 @@ static void	_cut_line(char **c_point, char **line)
 	tmp = *c_point;
 	*c_point = ft_strdup(&(*c_point)[i + 1]);
 	free(tmp);
+	if (*c_point)
+		_check_null_terminate(c_point);
 }
 
 /* _search_for_line

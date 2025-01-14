@@ -6,11 +6,11 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:32:50 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/14 10:38:30 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/14 13:32:25 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipx.h"
+#include "pipex.h"
 
 t_bool	ft_on_error(t_pipx *data, char **cmds, char *path, char *err_msg)
 {
@@ -54,7 +54,7 @@ char	**ft_get_paths(char *envp[])
 	}
 	if (!paths)
 	{
-		write(2, "Error: could not found paths\n", 29);
+		ft_putstr_fd("Error: could not found paths\n", STDERR_FILENO);
 		exit(1);
 	}
 	return (paths);
