@@ -3,3 +3,4 @@ build
 pipex
 libft.a
 tester
+.tester
