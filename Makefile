@@ -6,7 +6,7 @@
 #    By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/25 16:09:52 by znajdaou          #+#    #+#              #
-#    Updated: 2025/01/15 15:34:21 by znajdaou         ###   ########.fr        #
+#    Updated: 2025/01/15 15:50:29 by znajdaou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,9 @@ green = \033[32m
 reset = \033[0m
 
 all: $(NAME)
+	@echo "$(green)SUCCESS!!!$(reset)"
+
+bonus: $(NAME)
 	@echo "$(green)SUCCESS!!!$(reset)"
 
 $(BUILD_DR)%.o: %.c | $(BUILD_DR)

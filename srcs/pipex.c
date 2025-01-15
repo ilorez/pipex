@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 15:53:31 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/14 17:59:28 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/15 16:12:20 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int	main(int argc, char *argv[], char *envp[])
 	else
 		data->i = 1;
 	data->argc = argc;
-	if (!ft_run_commands(data, argv, envp))
-		return (ft_free_data(data), EXIT_FAILURE);
+	if (ft_run_commands(data, argv, envp))
+		return (ft_free_data(data), errno);
 	ft_free_data(data);
 	return (0);
 }

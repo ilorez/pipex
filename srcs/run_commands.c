@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:33:00 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/14 17:49:12 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/15 16:32:55 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_run_commands(t_pipx *data, char *argv[], char *envp[])
 {
 	if (ft_open_rw_files(&data, argv))
-		return (errno);
+		return (1);
 	while (++(data->i) < data->argc - 1)
 	{
 		if (pipe(data->fd) == -1)
@@ -30,7 +30,7 @@ int	ft_run_commands(t_pipx *data, char *argv[], char *envp[])
 	}
 	close(data->infile);
 	wait(NULL);
-	return (true);
+	return (0);
 }
 
 void	ft_child(t_pipx *data, char *envp[], char **argv)

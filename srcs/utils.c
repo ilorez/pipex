@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:32:50 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/15 15:41:47 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/15 15:54:48 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_on_error(char **cmds, char *path, char *err_msg)
 	if (err_msg)
 	{
 		perror(err_msg);
-		return (errno);
+		return (1);
 	}
 	return (0);
 }
@@ -40,8 +40,8 @@ char	**ft_get_paths(char *envp[])
 {
 	char	**paths;
 
-  if (!envp)
-    return NULL;
+	if (!envp)
+		return (NULL);
 	paths = NULL;
 	while (envp)
 	{
@@ -55,7 +55,7 @@ char	**ft_get_paths(char *envp[])
 	if (!paths)
 	{
 		ft_putstr_fd("Error: could not found paths\n", STDERR_FILENO);
-    return (NULL);
+		return (NULL);
 	}
 	return (paths);
 }
