@@ -6,7 +6,7 @@
 #    By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/25 16:09:52 by znajdaou          #+#    #+#              #
-#    Updated: 2025/01/14 18:02:18 by znajdaou         ###   ########.fr        #
+#    Updated: 2025/01/15 15:34:21 by znajdaou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,11 +60,32 @@ VALFLAGS= --leak-check=full \
 run: 
 	valgrind $(VALFLAGS) ./pipex /dev/stdin "grep salam" "grep salam1" "grep salam12" "grep salam123" /dev/stdout
 
+
+
 run_h: 
 	valgrind $(VALFLAGS) ./pipex here_doc EOF "grep salam" "grep salam1" "grep salam12" "grep salam123" /dev/stdout
 
 run_h2: 
 	env -i ./pipex here_doc EOF "grep salam" "grep salam1" "grep salam12" "grep salam123" /dev/stdout
+
+run_invalid_command: 
+	valgrind $(VALFLAGS) ./pipex /dev/stdin "grasdfkjep salam" "grep salam1" "grep salam12" "grep salam123" /dev/stdout
+
+run_invalid_command1: 
+	valgrind $(VALFLAGS) ./pipex /dev/stdin "grep salam" "grsadfkasjdfkjep salam12" "grep salam123" /dev/stdout
+
+
+
+run_invalid_command2: 
+	valgrind $(VALFLAGS) ./pipex /dev/stdin "grep salam" "grep salam12" "gaskdlfjaslfkdjrep salam123" /dev/stdout
+
+
+
+run_invalid_command3: 
+	valgrind $(VALFLAGS) ./pipex /dev/stdin "grep salam" "grep salam1" "grep salam12" "gaskdlfjaslfkdjrep salam123" /dev/stdout
+
+
+
 
 
 

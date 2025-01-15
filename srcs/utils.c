@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:32:50 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/14 18:05:26 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/15 15:41:47 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	**ft_get_paths(char *envp[])
 {
 	char	**paths;
 
-  if (envp || *envp)
+  if (!envp)
     return NULL;
 	paths = NULL;
 	while (envp)
