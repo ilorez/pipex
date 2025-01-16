@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:33:26 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/14 17:54:00 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/16 12:20:38 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,9 @@ char		**ft_get_paths(char *envp[]);
 char		*ft_get_right_path(char *cmd, char **paths);
 int			ft_on_error(char **cmds, char *path, char *err_msg);
 void		ft_free_data(t_pipx *data);
+
+// wait macros
+t_bool		wifexited(int status);
+int			wexitstatus(int status);
 
 #endif
