@@ -2,5 +2,5 @@ build
 *.o
 pipex
 libft.a
-tester
-.tester
+.tester*
+big_text.txt

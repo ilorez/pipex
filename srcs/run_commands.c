@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:33:00 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/16 13:39:14 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/16 17:55:34 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,12 @@ int ft_waitpid(t_pipx *data)
     if (data->status)
     {
       close(data->infile);
-      data->status = ft_on_error(NULL, NULL, "child exit with Error");
       return (data->status);
     }
   }
   else
   {
-    ft_on_error(NULL, NULL, "child has stopped");
+		ft_putstr_fd("Error: Child process has killed.\n", STDERR_FILENO);
     close(data->infile);
     return (1);
   }
@@ -69,12 +68,10 @@ void	ft_child(t_pipx *data, char *envp[], char **argv)
 	}
 	ft_change_fd(data->infile, STDIN_FILENO);
 	close((data->fd)[0]);
-	if (execve(data->path, data->cmds, envp) == -1)
-	{
-		ft_on_error(data->cmds, data->path, "execve");
-		ft_free_data(data);
-		exit(errno);
-	}
+	execve(data->path, data->cmds, envp);
+	ft_on_error(data->cmds, data->path, "execve");
+	ft_free_data(data);
+	exit(errno);
 }
 
 void	ft_read_from_input(t_pipx *data, char *av[])
