@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:32:50 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/15 15:54:48 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/16 13:39:21 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_on_error(char **cmds, char *path, char *err_msg)
 	if (err_msg)
 	{
 		perror(err_msg);
-		return (1);
+		return (errno);
 	}
 	return (0);
 }

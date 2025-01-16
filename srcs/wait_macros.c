@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 10:39:15 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/16 12:17:52 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/16 13:21:24 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
  * Check if the child process exited normally
  * If the lower 7 bits are zero, the process exited normally
  * */
-t_bool	wifexited(int status)
+t_bool	ft_wifexited(int status)
 {
 	return ((status & 0x7F) == 0);
 }
@@ -28,9 +28,9 @@ t_bool	wifexited(int status)
  * if we didnt add it that will cause a probleme if we have higher bits seted.
  * return : -1 on error
  * */
-int	wexitstatus(int status)
+int	ft_wexitstatus(int status)
 {
-	if (wifexited(status))
+	if (ft_wifexited(status))
 	{
 		return ((status >> 8) & 0xFF);
 	}

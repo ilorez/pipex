@@ -6,18 +6,42 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:33:00 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/16 12:53:54 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/16 13:39:14 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+int ft_waitpid(t_pipx *data)
+{
+  waitpid(data->pid, &(data->status), 0);
+  if (ft_wifexited(data->status))
+  {
+    data->status = ft_wexitstatus(data->status);
+    if (data->status)
+    {
+      close(data->infile);
+      data->status = ft_on_error(NULL, NULL, "child exit with Error");
+      return (data->status);
+    }
+  }
+  else
+  {
+    ft_on_error(NULL, NULL, "child has stopped");
+    close(data->infile);
+    return (1);
+  }
+  return (0);
+}
+
 int	ft_run_commands(t_pipx *data, char *argv[], char *envp[])
 {
 	if (ft_open_rw_files(&data, argv))
-		return (1);
+		return (errno);
 	while (++(data->i) < data->argc - 1)
 	{
+    if (ft_waitpid(data))
+      return (data->status);
 		if (pipe(data->fd) == -1)
 			return (ft_on_error(NULL, NULL, "pipe"));
 		data->pid = fork();
@@ -26,12 +50,6 @@ int	ft_run_commands(t_pipx *data, char *argv[], char *envp[])
 		else if (data->pid == 0)
 			ft_child(data, envp, argv);
 		close((data->fd)[1]);
-    waitpid(data->pid, data->status, 0);
-    if (wifexited(data->status))
-      if (wexitstatus(data->status))
-        return (wexitstatus(data->status));
-    else
-			return (ft_on_error(NULL, NULL, "child has stopped"));
 		data->infile = (data->fd)[0];
 	}
 	close(data->infile);

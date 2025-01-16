@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 15:53:31 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/15 16:12:20 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/16 13:27:26 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_pipx	*data;
+  int status;
 
 	if (argc < 5)
 	{
@@ -30,8 +31,8 @@ int	main(int argc, char *argv[], char *envp[])
 	else
 		data->i = 1;
 	data->argc = argc;
-	if (ft_run_commands(data, argv, envp))
-		return (ft_free_data(data), errno);
+  data->status = 0;
+	status = ft_run_commands(data, argv, envp);
 	ft_free_data(data);
-	return (0);
+	return (status);
 }
