@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:33:00 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/15 16:32:55 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/16 12:53:54 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,15 @@ int	ft_run_commands(t_pipx *data, char *argv[], char *envp[])
 		else if (data->pid == 0)
 			ft_child(data, envp, argv);
 		close((data->fd)[1]);
+    waitpid(data->pid, data->status, 0);
+    if (wifexited(data->status))
+      if (wexitstatus(data->status))
+        return (wexitstatus(data->status));
+    else
+			return (ft_on_error(NULL, NULL, "child has stopped"));
 		data->infile = (data->fd)[0];
 	}
 	close(data->infile);
-	wait(NULL);
 	return (0);
 }
 
