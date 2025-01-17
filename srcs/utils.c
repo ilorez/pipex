@@ -6,25 +6,11 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:32:50 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/17 10:46:01 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/17 16:37:58 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-int	ft_on_error(char **cmds, char *path, char *err_msg)
-{
-	if (cmds)
-		ft_free_str_lst(cmds);
-	if (path)
-		free(path);
-	if (err_msg)
-	{
-		perror(err_msg);
-		return (errno);
-	}
-	return (0);
-}
 
 // dup a FD and close it
 t_bool	ft_change_fd(int fd, int to)
@@ -83,7 +69,7 @@ void	ft_free_data(t_pipx *data)
 		return ;
 	if (data->paths)
 		ft_free_str_lst(data->paths);
-  if (data->pids)
-    free(data->pids);
+	if (data->pids)
+		free(data->pids);
 	free(data);
 }
