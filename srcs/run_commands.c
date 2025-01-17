@@ -6,23 +6,25 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:33:00 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/17 17:41:31 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/17 18:55:18 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-/* this function used to run commands one by one 
+/* this function used to run commands one by one
  * it's main function that controle all things from
  * reading from infile or here_doc to write to outfile
  * you can call it controler
  * */
 int	ft_run_commands(t_pipx *data, char *argv[], char *envp[])
 {
-	if (ft_get_infile(data, argv))
-		return (errno);
+	ft_get_infile(data, argv);
 	while (++(data->i) < data->argc - 1)
 	{
+		if (!argv[data->i][0])
+			return (ft_putstr_fd("Error: Not valid command\n", STDERR_FILENO),
+				1);
 		if (pipe(data->fd) == -1)
 			return (ft_on_error(NULL, NULL, "pipe"));
 		(data->pids)[data->j] = fork();
@@ -42,7 +44,7 @@ int	ft_run_commands(t_pipx *data, char *argv[], char *envp[])
 }
 
 /*
- * wait pids for make sure that all commands has done 
+ * wait pids for make sure that all commands has done
  * before leave from parent process
  * */
 int	ft_waitpids(t_pipx *data)
@@ -54,16 +56,9 @@ int	ft_waitpids(t_pipx *data)
 	{
 		waitpid((data->pids)[i], &(data->status), 0);
 		if (ft_wifexited(data->status))
-		{
 			data->status = ft_wexitstatus(data->status);
-			if (data->status)
-			{
-				close(data->infile);
-				return (data->status);
-			}
-		}
 	}
-	return (0);
+	return (data->status);
 }
 
 /*
@@ -89,7 +84,10 @@ void	ft_child(t_pipx *data, char *envp[], char **argv)
 		ft_change_fd(data->outfile, STDOUT_FILENO);
 		close((data->fd)[1]);
 	}
-	ft_change_fd(data->infile, STDIN_FILENO);
+	if (data->infile >= 0)
+		ft_change_fd(data->infile, STDIN_FILENO);
+	else
+		close(0);
 	execve(data->path, data->cmds, envp);
 	ft_child_exit(data, "execve");
 }

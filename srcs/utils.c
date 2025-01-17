@@ -51,8 +51,9 @@ char	*ft_get_right_path(char *cmd, char **paths)
 {
 	char	*path;
 
-  if (cmd[0] == '/' || !ft_strncmp(cmd, "../", 3)|| !ft_strncmp(cmd, "./", 2))
-	  return (ft_strdup(cmd));
+	if (cmd[0] == '/' || !ft_strncmp(cmd, "../", 3) || !ft_strncmp(cmd, "./",
+			2))
+		return (ft_strdup(cmd));
 	path = NULL;
 	while (*paths)
 	{

@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 15:53:31 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/17 17:29:52 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/17 18:38:10 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_pipx	*ft_init_data(int ac, char *av[], char *evp[])
 	else
 		data->is_here_doc = false;
 	data->i = data->is_here_doc * 1 + 1;
-	data->pids = ft_calloc(sizeof(int), ac - data->i - 1);
+	data->pids = ft_calloc(sizeof(int), ac - 2);
 	data->paths = ft_get_paths(evp);
 	if (!data->paths)
 	{
