@@ -6,12 +6,17 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:33:00 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/17 17:30:52 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/17 17:41:31 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+/* this function used to run commands one by one 
+ * it's main function that controle all things from
+ * reading from infile or here_doc to write to outfile
+ * you can call it controler
+ * */
 int	ft_run_commands(t_pipx *data, char *argv[], char *envp[])
 {
 	if (ft_get_infile(data, argv))
@@ -36,6 +41,10 @@ int	ft_run_commands(t_pipx *data, char *argv[], char *envp[])
 	return (0);
 }
 
+/*
+ * wait pids for make sure that all commands has done 
+ * before leave from parent process
+ * */
 int	ft_waitpids(t_pipx *data)
 {
 	int	i;
@@ -57,6 +66,9 @@ int	ft_waitpids(t_pipx *data)
 	return (0);
 }
 
+/*
+ * this function use for child processes
+ * */
 void	ft_child(t_pipx *data, char *envp[], char **argv)
 {
 	close((data->fd)[0]);

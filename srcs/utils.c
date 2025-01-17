@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:32:50 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/17 16:37:58 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/17 17:45:28 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ char	*ft_get_right_path(char *cmd, char **paths)
 {
 	char	*path;
 
+  if (cmd[0] == '/' || !ft_strncmp(cmd, "../", 3)|| !ft_strncmp(cmd, "./", 2))
+	  return (ft_strdup(cmd));
 	path = NULL;
 	while (*paths)
 	{
