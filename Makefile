@@ -6,7 +6,7 @@
 #    By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/25 16:09:52 by znajdaou          #+#    #+#              #
-#    Updated: 2025/01/16 13:23:36 by znajdaou         ###   ########.fr        #
+#    Updated: 2025/01/17 17:26:36 by znajdaou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ CC = cc
 AR = ar rc
 RM = rm -f
 
-SRCS= pipex.c run_commands.c utils.c wait_macros.c
+SRCS= pipex.c run_commands.c utils.c wait_macros.c on_errors.c here_doc.c 
 OBJS = $(addprefix $(BUILD_DR),$(SRCS:%.c=%.o))
 
 green = \033[32m
