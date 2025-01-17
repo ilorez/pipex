@@ -6,29 +6,36 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:33:00 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/16 17:55:34 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/17 10:38:24 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int ft_waitpid(t_pipx *data)
+int ft_waitpids(t_pipx *data)
 {
-  waitpid(data->pid, &(data->status), 0);
-  if (ft_wifexited(data->status))
+  int i;
+
+  i = 0; 
+  while((data->pids)[i])
   {
-    data->status = ft_wexitstatus(data->status);
-    if (data->status)
+    waitpid((data->pids)[i], &(data->status), 0);
+    if (ft_wifexited(data->status))
     {
-      close(data->infile);
-      return (data->status);
+      data->status = ft_wexitstatus(data->status);
+      if (data->status)
+      {
+        close(data->infile);
+        return (data->status);
+      }
     }
-  }
-  else
-  {
-		ft_putstr_fd("Error: Child process has killed.\n", STDERR_FILENO);
-    close(data->infile);
-    return (1);
+    else
+    {
+	  	ft_putstr_fd("Error: Child process has killed.\n", STDERR_FILENO);
+      close(data->infile);
+      return (1);
+    }
+    i++;
   }
   return (0);
 }
@@ -39,8 +46,6 @@ int	ft_run_commands(t_pipx *data, char *argv[], char *envp[])
 		return (errno);
 	while (++(data->i) < data->argc - 1)
 	{
-    if (ft_waitpid(data))
-      return (data->status);
 		if (pipe(data->fd) == -1)
 			return (ft_on_error(NULL, NULL, "pipe"));
 		data->pid = fork();
@@ -50,7 +55,10 @@ int	ft_run_commands(t_pipx *data, char *argv[], char *envp[])
 			ft_child(data, envp, argv);
 		close((data->fd)[1]);
 		data->infile = (data->fd)[0];
+    (data->pids)[(data->j)++] = data->pid;
 	}
+  if (ft_waitpids(data))
+      return (data->status);
 	close(data->infile);
 	return (0);
 }
@@ -114,6 +122,7 @@ int	ft_open_rw_files(t_pipx **data, char *argv[])
 			ft_read_from_input(*data, argv);
 		close(((*data)->fd)[1]);
 		(*data)->infile = ((*data)->fd)[0];
+    ((*data)->pids)[((*data)->j)++] = (*data)->pid;
 	}
 	else
 	{

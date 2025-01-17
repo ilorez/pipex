@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 15:53:31 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/16 13:27:26 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/17 10:36:16 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	main(int argc, char *argv[], char *envp[])
 	else
 		data->i = 1;
 	data->argc = argc;
+  data->j = 0;
+  data->pids = ft_calloc(sizeof(int), argc - data->i - 1);
   data->status = 0;
 	status = ft_run_commands(data, argv, envp);
 	ft_free_data(data);
