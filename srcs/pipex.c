@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 15:53:31 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/17 10:36:16 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/17 10:46:34 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@ int	main(int argc, char *argv[], char *envp[])
 		return (EXIT_FAILURE);
 	}
 	data = ft_calloc(sizeof(t_pipx), 1);
-	data->paths = ft_get_paths(envp);
-	if (!data->paths)
-		return (ft_free_data(data), EXIT_FAILURE);
 	if (ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1]) + 1) == 0)
 		data->i = 2;
 	else
 		data->i = 1;
+  data->pids = ft_calloc(sizeof(int), argc - data->i - 1);
+  data->paths = ft_get_paths(envp);
+	if (!data->paths)
+		return (ft_free_data(data), EXIT_FAILURE);
 	data->argc = argc;
   data->j = 0;
-  data->pids = ft_calloc(sizeof(int), argc - data->i - 1);
   data->status = 0;
 	status = ft_run_commands(data, argv, envp);
 	ft_free_data(data);

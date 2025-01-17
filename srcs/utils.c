@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:32:50 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/16 13:39:21 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/17 10:46:01 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,7 @@ void	ft_free_data(t_pipx *data)
 		return ;
 	if (data->paths)
 		ft_free_str_lst(data->paths);
+  if (data->pids)
+    free(data->pids);
 	free(data);
 }

@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:33:00 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/17 10:38:24 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/17 11:47:24 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int ft_waitpids(t_pipx *data)
   i = 0; 
   while((data->pids)[i])
   {
+    ft_printf("hello");
     waitpid((data->pids)[i], &(data->status), 0);
     if (ft_wifexited(data->status))
     {
@@ -29,12 +30,12 @@ int ft_waitpids(t_pipx *data)
         return (data->status);
       }
     }
-    else
-    {
-	  	ft_putstr_fd("Error: Child process has killed.\n", STDERR_FILENO);
-      close(data->infile);
-      return (1);
-    }
+    //else
+    //{
+	  //	ft_putstr_fd("Error: Child process has killed.\n", STDERR_FILENO);
+    //  close(data->infile);
+    //  return (1);
+    //}
     i++;
   }
   return (0);
@@ -54,11 +55,12 @@ int	ft_run_commands(t_pipx *data, char *argv[], char *envp[])
 		else if (data->pid == 0)
 			ft_child(data, envp, argv);
 		close((data->fd)[1]);
+    close(data->infile);
 		data->infile = (data->fd)[0];
     (data->pids)[(data->j)++] = data->pid;
-	}
+	} 
   if (ft_waitpids(data))
-      return (data->status);
+    return (data->status);
 	close(data->infile);
 	return (0);
 }
@@ -76,6 +78,7 @@ void	ft_child(t_pipx *data, char *envp[], char **argv)
 	}
 	ft_change_fd(data->infile, STDIN_FILENO);
 	close((data->fd)[0]);
+  ft_printf("run cmd: %s\n", data->path);
 	execve(data->path, data->cmds, envp);
 	ft_on_error(data->cmds, data->path, "execve");
 	ft_free_data(data);
