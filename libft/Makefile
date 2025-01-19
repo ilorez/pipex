@@ -1,7 +1,7 @@
 
 NAME = libft.a
 INCLUDE_DR = ./includes
-CFLAGS = -Wall -Wextra -Werror -I$(INCLUDE_DR)  -ggdb
+CFLAGS = -Wall -Wextra -Werror -I$(INCLUDE_DR)  # -ggdb
 CC = cc
 LIBC = ar -rcs
 RM = rm -f

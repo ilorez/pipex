@@ -5,91 +5,67 @@
 #                                                     +:+ +:+         +:+      #
 #    By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/12/25 16:09:52 by znajdaou          #+#    #+#              #
-#    Updated: 2025/01/17 17:26:36 by znajdaou         ###   ########.fr        #
+#    Created: 2025/01/19 11:40:47 by znajdaou          #+#    #+#              #
+#    Updated: 2025/01/19 11:44:21 by znajdaou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+vpath %.c bonus
 vpath %.c srcs
+vpath %.c utils
 
 BUILD_DR = ./build/
 NAME = pipex
+BONUS_NAME = pipex_bonus
 
 LIBFT_DR = ./libft
 
-FLAGS = -Wall -Wextra -Werror -ggdb # -fsanitize=address
+FLAGS = -Wall -Wextra -Werror #-g3 -fsanitize=address
 INCLUDES_DRS = -I./includes -I./libft/includes
 CC = cc
 AR = ar rc
 RM = rm -f
 
-SRCS= pipex.c run_commands.c utils.c wait_macros.c on_errors.c here_doc.c 
-OBJS = $(addprefix $(BUILD_DR),$(SRCS:%.c=%.o))
+SRCS= pipex.c
 
+UTILS_SRCS = init_data.c run_commands.c utils.c wait_macros.c on_errors.c here_doc.c 
+
+BONUS_SRCS=  pipex_bonus.c
+
+OBJS = $(addprefix $(BUILD_DR),$(SRCS:%.c=%.o))
+UTILS_OBJS = $(addprefix $(BUILD_DR),$(UTILS_SRCS:%.c=%.o))
+BONUS_OBJS = $(addprefix $(BUILD_DR),$(BONUS_SRCS:%.c=%.o))
 green = \033[32m
 reset = \033[0m
 
 all: $(NAME)
-	@echo "$(green)SUCCESS!!!$(reset)"
-
-bonus: $(NAME)
-	@echo "$(green)SUCCESS!!!$(reset)"
+	@echo "$(green)MANDATORY SUCCESS!!!$(reset)"
 
 $(BUILD_DR)%.o: %.c | $(BUILD_DR)
 	$(CC) $(FLAGS) $(INCLUDES_DRS) -c $< -o $@
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) $(UTILS_OBJS)
 	make -C $(LIBFT_DR)
-	$(CC) $(FLAGS) $(OBJS) $(INCLUDES_DRS) $(LIBFT_DR)/libft.a -o $(NAME)
+	$(CC) $(FLAGS) $(OBJS) $(UTILS_OBJS) $(INCLUDES_DRS) $(LIBFT_DR)/libft.a -o $(NAME)
+
+bonus: $(BONUS_NAME)
+	@echo "$(green)BONUS SUCCESS!!!$(reset)"
+
+$(BONUS_NAME): $(BONUS_OBJS) $(UTILS_OBJS)
+	make -C $(LIBFT_DR)
+	$(CC) $(FLAGS) $(BONUS_OBJS) $(UTILS_OBJS) $(INCLUDES_DRS) $(LIBFT_DR)/libft.a -o $(BONUS_NAME)
 
 $(BUILD_DR):
 	mkdir -p $@
 
 clean:
-	$(RM) $(OBJS)
+	$(RM) $(OBJS) $(UTILS_OBJS) $(BONUS_OBJS)
 	make -C $(LIBFT_DR) fclean
 
 fclean: clean
 	$(RM) $(NAME)
+	$(RM) $(BONUS_NAME)
 
 re: fclean all
-
-VALFLAGS= --leak-check=full \
-					--show-leak-kinds=all \
-					--track-origins=yes \
-					--trace-children=yes \
-					--trace-children-skip='*/bin/*,*/sbin/*' 
-
-run: 
-	valgrind $(VALFLAGS) ./pipex /dev/stdin "grep salam" "grep salam1" "grep salam12" "grep salam123" /dev/stdout
-
-
-
-run_h: 
-	valgrind $(VALFLAGS) ./pipex here_doc EOF "grep salam" "grep salam1" "grep salam12" "grep salam123" /dev/stdout
-
-run_h2: 
-	env -i ./pipex here_doc EOF "grep salam" "grep salam1" "grep salam12" "grep salam123" /dev/stdout
-
-run_invalid_command: 
-	valgrind $(VALFLAGS) ./pipex /dev/stdin "grasdfkjep salam" "grep salam1" "grep salam12" "grep salam123" /dev/stdout
-
-run_invalid_command1: 
-	valgrind $(VALFLAGS) ./pipex /dev/stdin "grep salam" "grsadfkasjdfkjep salam12" "grep salam123" /dev/stdout
-
-
-
-run_invalid_command2: 
-	valgrind $(VALFLAGS) ./pipex /dev/stdin "grep salam" "grep salam12" "gaskdlfjaslfkdjrep salam123" /dev/stdout
-
-
-
-run_invalid_command3: 
-	valgrind $(VALFLAGS) ./pipex /dev/stdin "grep salam" "grep salam1" "grep salam12" "gaskdlfjaslfkdjrep salam123" /dev/stdout
-
-
-
-
-
 
 .PHONY: all clean fclean re bonus

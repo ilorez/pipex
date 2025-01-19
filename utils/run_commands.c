@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:33:00 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/19 11:08:29 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/19 11:16:02 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	ft_child(t_pipx *data, char *envp[], char **argv)
 	else
 		close(0);
 	execve(data->path, data->cmds, envp);
-	ft_child_exit(data, "execve", errno);
+	ft_child_exit(data, "execve", 127);
 }
 
 /* ft_get_infile
@@ -121,7 +121,7 @@ int	ft_get_infile(t_pipx *data, char *argv[])
 	{
 		data->infile = open(argv[1], O_RDONLY);
 		if (data->infile == -1)
-			return (ft_on_error(NULL, NULL, "open infile"));
+			return (ft_on_error(NULL, NULL, "field to open infile"));
 	}
 	return (0);
 }
