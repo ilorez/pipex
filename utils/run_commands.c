@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:33:00 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/19 11:16:02 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/19 12:18:56 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ int	ft_get_infile(t_pipx *data, char *argv[])
 			ft_free_data(data);
 			exit(0);
 		}
+    wait(NULL);
 		close((data->fd)[1]);
 		data->infile = (data->fd)[0];
 		(data->j)++;

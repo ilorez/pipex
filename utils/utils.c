@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:32:50 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/17 17:45:28 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/19 12:10:16 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ char	**ft_get_paths(char *envp[])
 {
 	char	**paths;
 
-	if (!envp)
-		return (NULL);
 	paths = NULL;
 	while (envp)
 	{
@@ -39,10 +37,7 @@ char	**ft_get_paths(char *envp[])
 		envp++;
 	}
 	if (!paths)
-	{
-		ft_putstr_fd("Error: could not found paths\n", STDERR_FILENO);
-		return (NULL);
-	}
+		paths = ft_split("", ' ');
 	return (paths);
 }
 
