@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:33:00 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/17 18:55:18 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/19 11:08:29 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	ft_run_commands(t_pipx *data, char *argv[], char *envp[])
 	while (++(data->i) < data->argc - 1)
 	{
 		if (!argv[data->i][0])
-			return (ft_putstr_fd("Error: Not valid command\n", STDERR_FILENO),
-				1);
+			return (ft_putstr_fd("Error: permission denied.\n", STDERR_FILENO),
+				126);
 		if (pipe(data->fd) == -1)
 			return (ft_on_error(NULL, NULL, "pipe"));
 		(data->pids)[data->j] = fork();
@@ -80,7 +80,7 @@ void	ft_child(t_pipx *data, char *envp[], char **argv)
 			data->outfile = open(argv[data->argc - 1],
 					O_WRONLY | O_CREAT | O_TRUNC, 0777);
 		if (data->outfile == -1)
-			ft_child_exit(data, "field to open outfile");
+			ft_child_exit(data, "field to open outfile", 1);
 		ft_change_fd(data->outfile, STDOUT_FILENO);
 		close((data->fd)[1]);
 	}
@@ -89,7 +89,7 @@ void	ft_child(t_pipx *data, char *envp[], char **argv)
 	else
 		close(0);
 	execve(data->path, data->cmds, envp);
-	ft_child_exit(data, "execve");
+	ft_child_exit(data, "execve", errno);
 }
 
 /* ft_get_infile

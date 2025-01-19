@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:33:26 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/17 17:29:32 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/19 09:55:31 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_pipx		*ft_init_data(int ac, char *av[], char *evp[]);
 void		ft_here_doc(int fd, char *eof);
 
 // on_error
-void		ft_child_exit(t_pipx *data, char *err_msg);
+void		ft_child_exit(t_pipx *data, char *err_msg, int e_s);
 int			ft_on_error(char **cmds, char *path, char *err_msg);
 
 // run commands
