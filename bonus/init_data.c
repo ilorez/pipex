@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 11:19:08 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/21 12:39:41 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/21 17:54:54 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ t_pipex	*ft_init_data(int ac, char *av[], char *evp[])
   data->out = -1;
 	data->pids = ft_calloc(sizeof(int), ac - 3);
 	data->paths = ft_get_paths(evp);
-  data->tmpfile = NULL:
+  data->tmpfile = NULL;
   if (!data->paths || !data->pids)
-		return (ft_handle_exit(data));
+		ft_handle_exit(data, 1);
 	return (data);
 }

@@ -6,9 +6,11 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 16:04:17 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/21 12:43:28 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/21 18:09:20 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "pipex.h"
 
 int ft_handle_exit(t_pipex *data, int status)
 {
@@ -27,11 +29,11 @@ int ft_handle_exit(t_pipex *data, int status)
   if (data->path)
     free(data->path);
   if (data->cmds)
-    ft_free_str(data->cmds);
+    ft_free_str_lst(data->cmds);
   if (data->paths)
-    ft_free_str(data->paths);
+    ft_free_str_lst(data->paths);
   if (data->is_here_doc && data->tmpfile)
-    free(data->tmpfile)
+    free(data->tmpfile);
   if (data)
     free(data);
   exit(status);

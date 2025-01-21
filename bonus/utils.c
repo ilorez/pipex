@@ -6,22 +6,11 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:32:50 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/21 16:03:06 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/21 17:50:42 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	ft_free_data(t_pipx *data)
-{
-	if (!data)
-		return ;
-	if (data->paths)
-		ft_free_str_lst(data->paths);
-	if (data->pids)
-		free(data->pids);
-	free(data);
-}
 
 // dup a FD and close it
 t_bool	ft_change_fd(t_pipex *data, int fd, int to)
@@ -30,6 +19,16 @@ t_bool	ft_change_fd(t_pipex *data, int fd, int to)
 	  ft_child_exit(data, NULL, "dup2", 1);
 	close(fd);
 	return (true);
+}
+
+void ft_close_pipe(t_pipex *data, t_bool read, t_bool write)
+{
+  if ((data->fd)[0] != -1 && read)
+	  close((data->fd)[0]);
+  if ((data->fd)[1] != -1 && write)
+	  close((data->fd)[1]);
+  (data->fd)[0] = -1;
+  (data->fd)[1] = -1;
 }
 
 // get paths & split it from envp

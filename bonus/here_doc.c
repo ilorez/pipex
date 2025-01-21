@@ -6,11 +6,53 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 16:20:29 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/21 13:11:18 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/21 18:08:24 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+int ft_create_heredoc_line(t_pipex  *data)
+{
+  int pid;
+
+  data->tmpfile = ft_randtmp_file();
+	pid = fork();
+	if (pid == -1)
+		return (ft_show_error(NULL, "fork"));
+	else if (pid == 0)
+	{
+    (data->fd)[1] = open(data->tmpfile, O_WRONLY | O_CREAT, 0777);
+    if ((data->fd)[1] < 0)
+    {
+        perror("open failed");
+        ft_handle_exit(data, 1);
+    }
+		ft_here_doc((data->fd)[1], (data->av)[2]);
+    ft_handle_exit(data, 0);
+	}
+  waitpid(pid, &(data->status), 0);
+	if (ft_wifexited(data->status))
+		data->status = ft_wexitstatus(data->status);
+  data->in = open(data->tmpfile, O_CREAT | O_RDONLY , 0777);
+  if (data->in < 0)
+      perror("open failed");
+  return (0);
+}
+
+char *ft_randtmp_file()
+{
+  char *tmpfile;
+  char *tmp;
+
+  tmpfile = ft_itoa((unsigned long)(&tmpfile));
+  if (!tmpfile)
+    return (NULL);
+  tmp = tmpfile;
+  tmpfile = ft_strjoin("/tmp", tmpfile, "/ilorez_herdoc_");
+  free(tmp);
+  return tmpfile;
+}
 
 void	ft_here_doc(int fd, char *eof)
 {
@@ -33,46 +75,3 @@ void	ft_here_doc(int fd, char *eof)
 	free(line);
 	close(fd);
 }
-
-int ft_create_heredoc_line(t_pipex  *data)
-{
-  int pid;
-
-  data->tmpfile = ft_randtmp_file();
-	pid = fork();
-	if (pid == -1)
-		return (ft_show_error(NULL, "fork"));
-	else if (pid == 0)
-	{
-    (data->fd)[1] = open(data->tmpfile, O_WRONLY | O_CREAT, 0777);
-    if ((data->fd)[1] < 0)
-    {
-        perror("open failed");
-        ft_handle_exit(data, 1);
-    }
-		ft_here_doc((data->fd)[1], argv[2]);
-    ft_handle_exit(data, 0);
-	}
-  waitpid(pid, &(data->status), 0);
-	if (ft_wifexited(data->status))
-		data->status = ft_wexitstatus(data->status);
-  data->infile = open(data->tmpfile, O_CREAT | O_RDONLY , 0777);
-  if (data->infile < 0)
-      perror("open failed");
-  return (0);
-}
-
-char *ft_randtmp_file()
-{
-  char *tmpfile;
-  char *tmp;
-
-  tmpfile = ft_itoa(&tmpfile);
-  if (!tmpfile)
-    return (NULL);
-  tmp = tmpfile;
-  tmpfile = ft_strjoin("/tmp", tmpfile, "/ilorez_herdoc_");
-  free(tmp);
-  return tmpfile;
-}
-

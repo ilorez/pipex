@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 15:53:31 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/19 16:22:41 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/21 17:41:55 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(int ac, char *av[], char *evp[])
 {
-	t_pipx	*data;
+	t_pipex	*data;
 	int		status;
 
 	if (ac < 5)
@@ -28,6 +28,5 @@ int	main(int ac, char *av[], char *evp[])
 	if (!data)
 		return (EXIT_FAILURE);
 	status = ft_run_commands(data);
-	ft_free_data(data);
-	return (status);
+	ft_handle_exit(data, status);
 }
