@@ -12,46 +12,46 @@
 
 #include "pipex.h"
 
-int ft_create_heredoc_line(t_pipex  *data)
+int	ft_create_heredoc_line(t_pipex *data)
 {
-  int pid;
+	int	pid;
 
-  data->tmpfile = ft_randtmp_file();
+	data->tmpfile = ft_randtmp_file();
 	pid = fork();
 	if (pid == -1)
 		return (ft_show_error(NULL, "fork"));
 	else if (pid == 0)
 	{
-    (data->fd)[1] = open(data->tmpfile, O_WRONLY | O_CREAT, 0777);
-    if ((data->fd)[1] < 0)
-    {
-        perror("open failed");
-        ft_handle_exit(data, 1);
-    }
+		(data->fd)[1] = open(data->tmpfile, O_WRONLY | O_CREAT, 0777);
+		if ((data->fd)[1] < 0)
+		{
+			perror("open failed");
+			ft_handle_exit(data, 1);
+		}
 		ft_here_doc((data->fd)[1], (data->av)[2]);
-    ft_handle_exit(data, 0);
+		ft_handle_exit(data, 0);
 	}
-  waitpid(pid, &(data->status), 0);
+	waitpid(pid, &(data->status), 0);
 	if (ft_wifexited(data->status))
 		data->status = ft_wexitstatus(data->status);
-  data->in = open(data->tmpfile, O_CREAT | O_RDONLY , 0777);
-  if (data->in < 0)
-      perror("open failed");
-  return (0);
+	data->in = open(data->tmpfile, O_CREAT | O_RDONLY, 0777);
+	if (data->in < 0)
+		perror("open failed");
+	return (0);
 }
 
-char *ft_randtmp_file()
+char	*ft_randtmp_file(void)
 {
-  char *tmpfile;
-  char *tmp;
+	char	*tmpfile;
+	char	*tmp;
 
-  tmpfile = ft_itoa((unsigned long)(&tmpfile));
-  if (!tmpfile)
-    return (NULL);
-  tmp = tmpfile;
-  tmpfile = ft_strjoin("/tmp", tmpfile, "/ilorez_herdoc_");
-  free(tmp);
-  return tmpfile;
+	tmpfile = ft_itoa((unsigned long)(&tmpfile));
+	if (!tmpfile)
+		return (NULL);
+	tmp = tmpfile;
+	tmpfile = ft_strjoin("/tmp", tmpfile, "/ilorez_herdoc_");
+	free(tmp);
+	return (tmpfile);
 }
 
 void	ft_here_doc(int fd, char *eof)

@@ -16,19 +16,19 @@
 t_bool	ft_change_fd(t_pipex *data, int fd, int to)
 {
 	if (dup2(fd, to) == -1)
-	  ft_child_exit(data, NULL, "dup2", 1);
+		ft_child_exit(data, NULL, "dup2", 1);
 	close(fd);
 	return (true);
 }
 
-void ft_close_pipe(t_pipex *data, t_bool read, t_bool write)
+void	ft_close_pipe(t_pipex *data, t_bool read, t_bool write)
 {
-  if ((data->fd)[0] != -1 && read)
-	  close((data->fd)[0]);
-  if ((data->fd)[1] != -1 && write)
-	  close((data->fd)[1]);
-  (data->fd)[0] = -1;
-  (data->fd)[1] = -1;
+	if ((data->fd)[0] != -1 && read)
+		close((data->fd)[0]);
+	if ((data->fd)[1] != -1 && write)
+		close((data->fd)[1]);
+	(data->fd)[0] = -1;
+	(data->fd)[1] = -1;
 }
 
 // get paths & split it from envp
@@ -70,5 +70,3 @@ char	*ft_get_right_path(char *cmd, char **paths)
 	}
 	return (ft_strdup(cmd));
 }
-
-

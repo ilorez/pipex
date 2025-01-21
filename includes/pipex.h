@@ -31,9 +31,9 @@ typedef struct s_pipex
 	int		ac;
 	int		j;
 	int		i;
-  char *tmpfile;
-  char **av;
-  char **evp;
+	char	*tmpfile;
+	char	**av;
+	char	**evp;
 	char	*path;
 	char	**cmds;
 	char	**paths;
@@ -42,37 +42,37 @@ typedef struct s_pipex
 // functions
 
 // handle_exit
-int ft_handle_exit(t_pipex *data, int status);
+int			ft_handle_exit(t_pipex *data, int status);
 
 // here_doc
-int ft_create_heredoc_line(t_pipex  *data);
-char *ft_randtmp_file();
-void	ft_here_doc(int fd, char *eof);
+int			ft_create_heredoc_line(t_pipex *data);
+char		*ft_randtmp_file(void);
+void		ft_here_doc(int fd, char *eof);
 
 // init data
 t_pipex		*ft_init_data(int ac, char *av[], char *evp[]);
 
 // on errors
-void	ft_child_exit(t_pipex *data, char *pre, char *suf, int e_s);
-int	ft_show_error(char *prefix, char *suffix);
+void		ft_child_exit(t_pipex *data, char *pre, char *suf, int e_s);
+int			ft_show_error(char *prefix, char *suffix);
 
 // run commands
-int	ft_run_commands(t_pipex *data);
-int	ft_waitpids(t_pipex *data);
-int	ft_get_infile(t_pipex *data);
+int			ft_run_commands(t_pipex *data);
+int			ft_waitpids(t_pipex *data);
+int			ft_get_infile(t_pipex *data);
 
 // child
-void	ft_child(t_pipex *data);
-void ft_get_outfile(t_pipex *data);
+void		ft_child(t_pipex *data);
+void		ft_get_outfile(t_pipex *data);
 
 // utils
-t_bool	ft_change_fd(t_pipex *data, int fd, int to);
-void ft_close_pipe(t_pipex *data, t_bool read, t_bool write);
-char	**ft_get_paths(char *envp[]);
-char	*ft_get_right_path(char *cmd, char **paths);
+t_bool		ft_change_fd(t_pipex *data, int fd, int to);
+void		ft_close_pipe(t_pipex *data, t_bool read, t_bool write);
+char		**ft_get_paths(char *envp[]);
+char		*ft_get_right_path(char *cmd, char **paths);
 
 // wait macros
-t_bool	ft_wifexited(int status);
-int	ft_wexitstatus(int status);
+t_bool		ft_wifexited(int status);
+int			ft_wexitstatus(int status);
 
 #endif

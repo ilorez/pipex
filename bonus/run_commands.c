@@ -23,11 +23,11 @@ int	ft_run_commands(t_pipex *data)
 	while (++(data->i) < data->ac - 1)
 	{
 		if (!(data->av)[data->i][0])
-    {
+		{
 			ft_putstr_fd("Error: permission denied.\n", STDERR_FILENO);
-      data->status = 126;
-      continue;
-    }
+			data->status = 126;
+			continue ;
+		}
 		if (pipe(data->fd) == -1)
 			return (ft_show_error(NULL, "pipe"));
 		(data->pids)[data->j] = fork();
@@ -37,7 +37,7 @@ int	ft_run_commands(t_pipex *data)
 			ft_child(data);
 		close(data->in);
 		data->in = (data->fd)[0];
-    ft_close_pipe(data, false, true);
+		ft_close_pipe(data, false, true);
 		(data->j)++;
 	}
 	if (ft_waitpids(data))
@@ -53,10 +53,10 @@ int	ft_run_commands(t_pipex *data)
 int	ft_get_infile(t_pipex *data)
 {
 	if (data->is_here_doc)
-  {
-    if (ft_create_heredoc_line(data) != 0)
-        return (1);
-  }
+	{
+		if (ft_create_heredoc_line(data) != 0)
+			return (1);
+	}
 	else
 	{
 		data->in = open((data->av)[1], O_RDONLY);
@@ -80,8 +80,8 @@ int	ft_waitpids(t_pipex *data)
 		waitpid((data->pids)[i], &(data->status), 0);
 		if (ft_wifexited(data->status))
 			data->status = ft_wexitstatus(data->status);
-    else 
-      data->status = 0;
+		else
+			data->status = 0;
 	}
 	return (data->status);
 }

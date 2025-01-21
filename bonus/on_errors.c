@@ -14,15 +14,13 @@
 
 void	ft_child_exit(t_pipex *data, char *pre, char *suf, int e_s)
 {
-  ft_show_error(pre, suf);
-  ft_handle_exit(data, e_s);
+	ft_show_error(pre, suf);
+	ft_handle_exit(data, e_s);
 }
 
 int	ft_show_error(char *prefix, char *suffix)
 {
-  ft_putstr_fd(prefix, STDERR_FILENO);
+	ft_putstr_fd(prefix, STDERR_FILENO);
 	perror(suffix);
 	return (errno);
 }
-
-
