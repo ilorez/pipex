@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:33:26 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/21 17:49:52 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/21 18:50:48 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 // include
 # include "libft.h"
+# include <string.h>
 # include <errno.h>
 # include <stdio.h>
 # include <sys/wait.h>
@@ -53,7 +54,6 @@ void		ft_here_doc(int fd, char *eof);
 t_pipex		*ft_init_data(int ac, char *av[], char *evp[]);
 
 // on errors
-void		ft_child_exit(t_pipex *data, char *pre, char *suf, int e_s);
 int			ft_show_error(char *prefix, char *suffix);
 
 // run commands

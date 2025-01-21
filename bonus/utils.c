@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:32:50 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/21 17:50:42 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/21 18:43:26 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@
 t_bool	ft_change_fd(t_pipex *data, int fd, int to)
 {
 	if (dup2(fd, to) == -1)
-		ft_child_exit(data, NULL, "dup2", 1);
+  {
+    ft_show_error("pipex: ", "dup2");
+	  ft_handle_exit(data, 1);
+  }
 	close(fd);
 	return (true);
 }
