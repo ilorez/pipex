@@ -6,11 +6,11 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 16:04:17 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/19 16:12:10 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/21 12:43:28 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int ft_handle_exit(t_pipex *data)
+int ft_handle_exit(t_pipex *data, int status)
 {
   if (!data)
     return (0);
@@ -30,7 +30,9 @@ int ft_handle_exit(t_pipex *data)
     ft_free_str(data->cmds);
   if (data->paths)
     ft_free_str(data->paths);
+  if (data->is_here_doc && data->tmpfile)
+    free(data->tmpfile)
   if (data)
     free(data);
-  return (0);
+  exit(status);
 }

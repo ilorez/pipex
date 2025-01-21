@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:33:26 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/19 16:25:38 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/21 12:37:40 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,11 @@ typedef struct s_pipex
 	int		out;
 	int		in;
 	int		ac;
+	int		j;
+	int		i;
+  char *tmpfile;
   char **av;
   char **evp;
-	int		i;
-	int		j;
 	char	*path;
 	char	**cmds;
 	char	**paths;

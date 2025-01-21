@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:32:50 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/19 16:03:15 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/21 16:03:06 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	ft_free_data(t_pipx *data)
 }
 
 // dup a FD and close it
-t_bool	ft_change_fd(int fd, int to)
+t_bool	ft_change_fd(t_pipex *data, int fd, int to)
 {
 	if (dup2(fd, to) == -1)
-		return (false);
+	  ft_child_exit(data, NULL, "dup2", 1);
 	close(fd);
 	return (true);
 }
@@ -40,7 +40,7 @@ char	**ft_get_paths(char *envp[])
 	paths = NULL;
 	while (envp)
 	{
-		if (ft_strncmp(*envp, "PATH=", 5) == 0)
+		if (*envp && ft_strncmp(*envp, "PATH=", 5) == 0)
 		{
 			paths = ft_split((*envp + 5), ':');
 			break ;
