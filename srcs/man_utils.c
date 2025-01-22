@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   man_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:32:50 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/22 15:02:23 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/22 15:19:35 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "man_pipex.h"
 
 // dup a FD and close it
 t_bool	ft_change_fd(t_pipex *data, int fd, int to)

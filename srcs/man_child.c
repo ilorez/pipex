@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   child.c                                            :+:      :+:    :+:   */
+/*   man_child.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 17:33:06 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/21 18:53:50 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/22 15:36:00 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "man_pipex.h"
 
 /*
  * this function use for child processes
@@ -39,12 +39,8 @@ void	ft_child(t_pipex *data)
 
 void	ft_get_outfile(t_pipex *data)
 {
-	if (data->is_here_doc)
-		data->out = open((data->av)[data->ac - 1],
-				O_WRONLY | O_CREAT | O_APPEND, 0777);
-	else
-		data->out = open((data->av)[data->ac - 1], O_WRONLY | O_CREAT | O_TRUNC,
-				0777);
+	data->out = open((data->av)[data->ac - 1], O_WRONLY | O_CREAT | O_TRUNC,
+			0777);
 	if (data->out == -1)
 	{
 		ft_putstr_fd("pipex: cannot create ", STDERR_FILENO);
