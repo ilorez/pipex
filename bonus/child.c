@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 17:33:06 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/21 18:53:50 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/23 11:37:01 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,13 @@ void	ft_child(t_pipex *data)
 		ft_change_fd(data, data->in, STDIN_FILENO);
 	execve(data->path, data->cmds, data->evp);
 	ft_putstr_fd("pipex: ", STDERR_FILENO);
-	ft_putstr_fd((data->cmds)[0], STDERR_FILENO);
-	ft_putstr_fd(": not found\n", STDERR_FILENO);
-	ft_handle_exit(data, 127);
+  perror((data->cmds)[0]);
+  if (errno == 2)
+	  ft_handle_exit(data, 127);
+  else if (errno == 13)
+	  ft_handle_exit(data, 126);
+  else
+	  ft_handle_exit(data, errno);
 }
 
 void	ft_get_outfile(t_pipex *data)
@@ -48,8 +52,7 @@ void	ft_get_outfile(t_pipex *data)
 	if (data->out == -1)
 	{
 		ft_putstr_fd("pipex: cannot create ", STDERR_FILENO);
-		ft_putstr_fd((data->av)[data->ac - 1], STDERR_FILENO);
-		ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
+    perror((data->av)[data->ac - 1]);
 		ft_handle_exit(data, 2);
 	}
 	ft_change_fd(data, data->out, STDOUT_FILENO);
