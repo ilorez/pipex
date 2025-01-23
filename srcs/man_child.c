@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 17:33:06 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/23 11:45:32 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/23 18:24:28 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,18 @@ void	ft_child(t_pipex *data)
 		ft_change_fd(data, open("/dev/null", O_RDONLY), STDIN_FILENO);
 	else
 		ft_change_fd(data, data->in, STDIN_FILENO);
+	if (!data->path)
+		ft_handle_exit(data, 127);
 	execve(data->path, data->cmds, data->evp);
 	ft_putstr_fd("pipex: ", STDERR_FILENO);
 	perror((data->cmds)[0]);
-	if (errno == 2)
-		ft_handle_exit(data, 127);
-	else if (errno == 13)
-		ft_handle_exit(data, 126);
-	else
-		ft_handle_exit(data, errno);
+	ft_handle_exit(data, 126);
 }
 
 void	ft_get_outfile(t_pipex *data)
 {
 	data->out = open((data->av)[data->ac - 1], O_WRONLY | O_CREAT | O_TRUNC,
-			0777);
+			0644);
 	if (data->out == -1)
 	{
 		ft_putstr_fd("pipex: cannot create ", STDERR_FILENO);

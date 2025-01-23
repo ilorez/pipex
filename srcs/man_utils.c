@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:32:50 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/22 15:19:35 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/23 18:08:38 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,8 @@ char	*ft_get_right_path(char *cmd, char **paths)
 		free(path);
 		paths++;
 	}
-	return (ft_strdup(cmd));
+	ft_putstr_fd("pipex: command not found: ", STDERR_FILENO);
+	ft_putstr_fd(cmd, STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
+	return (NULL);
 }

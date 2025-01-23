@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 17:33:06 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/23 17:54:19 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/23 18:24:10 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ void	ft_child(t_pipex *data)
 	(data->fd)[0] = -1;
 	data->cmds = ft_split((data->av)[data->i], ' ');
 	data->path = ft_get_right_path(data->cmds[0], data->paths);
-  if (!data->path)
-		ft_handle_exit(data, 127);
 	if (data->i < data->ac - 2)
 		ft_change_fd(data, (data->fd)[1], STDOUT_FILENO);
 	else
@@ -32,6 +30,8 @@ void	ft_child(t_pipex *data)
 		ft_change_fd(data, open("/dev/null", O_RDONLY), STDIN_FILENO);
 	else
 		ft_change_fd(data, data->in, STDIN_FILENO);
+	if (!data->path)
+		ft_handle_exit(data, 127);
 	execve(data->path, data->cmds, data->evp);
 	ft_putstr_fd("pipex: ", STDERR_FILENO);
 	perror((data->cmds)[0]);
