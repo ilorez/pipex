@@ -17,8 +17,8 @@ int	main(int ac, char *av[], char *evp[])
 	t_pipex	*data;
 	int		status;
 
-	if (ac < 5 || (ac == 5 && 
-    ft_strncmp(av[1], "here_doc", ft_strlen(av[1]) + 1) == 0))
+	if (ac < 5 || (ac == 5 && ft_strncmp(av[1], "here_doc", ft_strlen(av[1])
+				+ 1) == 0))
 	{
 		ft_printf("Usage: \n\t%s infile cmd1 cmd2 ... cmdn outfile\n", av[0]);
 		ft_printf("\n\t%s here_doc LIMITER cmd1 cmd2 ... cmdn outfile\n",
