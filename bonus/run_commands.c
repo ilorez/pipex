@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:33:00 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/21 17:47:29 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/23 09:19:27 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_run_commands(t_pipex *data)
 	{
 		if (!(data->av)[data->i][0])
 		{
-			ft_putstr_fd("Error: permission denied.\n", STDERR_FILENO);
+			ft_putstr_fd("pipex: : Permission denied\n", STDERR_FILENO);
 			data->status = 126;
 			continue ;
 		}
@@ -61,7 +61,7 @@ int	ft_get_infile(t_pipex *data)
 	{
 		data->in = open((data->av)[1], O_RDONLY);
 		if (data->in == -1)
-			return (ft_show_error("cannot open ", (data->av)[1]));
+			return (ft_show_error("pipex: cannot open ", (data->av)[1]));
 	}
 	return (0);
 }
