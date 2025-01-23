@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:33:00 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/23 11:18:59 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/23 11:39:52 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@
  * */
 int	ft_run_commands(t_pipex *data)
 {
-	if (ft_get_infile(data))
-      return (errno);
+	ft_get_infile(data);
 	while (++(data->i) < data->ac - 1)
 	{
 		if (!(data->av)[data->i][0])
