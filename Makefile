@@ -6,7 +6,7 @@
 #    By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/19 11:40:47 by znajdaou          #+#    #+#              #
-#    Updated: 2025/01/22 15:29:36 by znajdaou         ###   ########.fr        #
+#    Updated: 2025/01/23 17:42:57 by znajdaou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,10 +19,9 @@ BONUS_NAME = pipex_bonus
 
 LIBFT_DR = ./libft
 
-FLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address
+FLAGS = -Wall -Wextra -Werror #-g3 #-fsanitize=address
 INCLUDES_DRS = -I./includes -I./libft/includes
 CC = cc
-AR = ar rc
 RM = rm -f
 
 SRCS=  man_child.c man_handle_exit.c man_init_data.c \
