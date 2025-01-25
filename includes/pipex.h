@@ -6,7 +6,7 @@
 /*   By: znajdaou <znajdaou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 13:33:26 by znajdaou          #+#    #+#             */
-/*   Updated: 2025/01/21 18:50:48 by znajdaou         ###   ########.fr       */
+/*   Updated: 2025/01/24 09:10:39 by znajdaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 // include
 # include "libft.h"
 # include <string.h>
-# include <errno.h>
 # include <stdio.h>
 # include <sys/wait.h>
 
